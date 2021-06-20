@@ -503,9 +503,11 @@ jmeter -n -t load.jmx -j log/jmeter/jmeter.log -l log/jmeter/jmeter.jtl -e -o lo
 ### When
 - [ ] CLI tools used at {{ prod }}
 ```shell script
-uname --all
-cat /etc/os-release
-uptime
+uname --all # info about linux
+cat /etc/os-release # info about OS (distributive version)
+uptime 
+  
+ulimit -a [user] #limits for user
 
 df -ah
 free -m
