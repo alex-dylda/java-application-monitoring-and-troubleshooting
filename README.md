@@ -1,5 +1,60 @@
 Java Application Monitoring and Troubleshooting Basics
 ======================================================
+
+```shell script
+uname --all # info about linux
+cat /etc/os-release # info about OS (distributive version)
+uptime 
+  
+ulimit -a [user] # limits for user
+
+df -ah # disk free
+free -m # free memory
+
+ps -ef # info about processes
+ps -eaux --forest
+ps -eT | grep <pid> # shows info about process and it's threads
+
+top + 'q'
+top + 'f'
+top -p <pid>
+top -H -p <pid> # shows info about process and it's threads
+
+vmstat 1 [-w] # mpstat 1
+iostat 1 [-xm]
+pidstat 1
+netstat 1 [-tulnp]
+
+jps [-lvm] # java processes (jvm)
+jcmd <pid> help
+jcmd <pid> VM.uptime # uptime of java app
+jcmd <pid> VM.system_properties # different system properties for application
+jcmd <pid> VM.flags # jvm flags
+
+java -XX:+UnlockDiagnosticVMOptions -XX:+UnlockExperimentalVMOptions -XX:+PrintFlagsFinal -version # defaul jvm flags and options
+jinfo <pid>
+jinfo -flag PrintGCDetails <pid> # get jvm flag value
+jinfo -flag +PrintGCDetails <pid> # change flag value, makes sense only for _manageable_ ones
+```
+
+- [ ] Web applications used
+```
+http://{{ prod }}:8080/dbo/swagger-ui.html
+
+http://{{ prod }}:8080/dbo/actuator/health
+http://{{ prod }}:8080/dbo/actuator
+http://{{ prod }}:8080/dbo/actuator/metrics
+http://{{ prod }}:8080/dbo/actuator/metrics/jvm.memory.max?tag=area:nonheap&tag=id:Metaspace
+
+http://{{ prod }}:8080/dbo/actuator/prometheus
+
+http://{{ prod }}:9090/alerts
+http://{{ prod }}:9090/graph
+http://{{ prod }}:9090/graph?g0.range_input=15m&g0.tab=0&g0.expr=http_server_requests_seconds_count
+
+http://{{ prod }}:3000
+```
+
 _4. Java Application as a Runtime White Box: App running, JVM and application monitoring, troubleshooting, faults analysing and tuning._ 24 hrs / 3 days.
 
 > You have Java application running at prod server, Prometheus and ssh terminal.
@@ -502,59 +557,6 @@ jmeter -n -t load.jmx -j log/jmeter/jmeter.log -l log/jmeter/jmeter.jtl -e -o lo
 
 ### When
 - [ ] CLI tools used at {{ prod }}
-```shell script
-uname --all # info about linux
-cat /etc/os-release # info about OS (distributive version)
-uptime 
-  
-ulimit -a [user] #limits for user
-
-df -ah
-free -m
-
-ps -ef
-ps -eaux --forest
-ps -eT | grep <pid>
-
-top + 'q'
-top + 'f'
-top -p <pid>
-top -H -p <pid>
-
-vmstat 1 [-w] # mpstat 1
-iostat 1 [-xm]
-pidstat 1
-netstat 1 [-tulnp]
-
-jps [-lvm]
-jcmd <pid> help
-jcmd <pid> VM.uptime
-jcmd <pid> VM.system_properties
-jcmd <pid> VM.flags
-
-java -XX:+UnlockDiagnosticVMOptions -XX:+UnlockExperimentalVMOptions -XX:+PrintFlagsFinal -version
-jinfo <pid>
-jinfo -flag PrintGCDetails <pid> # get jvm flag value
-jinfo -flag +PrintGCDetails <pid> # change flag value, makes sense only for _manageable_ ones
-```
-
-- [ ] Web applications used
-```
-http://{{ prod }}:8080/dbo/swagger-ui.html
-
-http://{{ prod }}:8080/dbo/actuator/health
-http://{{ prod }}:8080/dbo/actuator
-http://{{ prod }}:8080/dbo/actuator/metrics
-http://{{ prod }}:8080/dbo/actuator/metrics/jvm.memory.max?tag=area:nonheap&tag=id:Metaspace
-
-http://{{ prod }}:8080/dbo/actuator/prometheus
-
-http://{{ prod }}:9090/alerts
-http://{{ prod }}:9090/graph
-http://{{ prod }}:9090/graph?g0.range_input=15m&g0.tab=0&g0.expr=http_server_requests_seconds_count
-
-http://{{ prod }}:3000
-```
 
 ### Finally
 - [ ] JMeter load emulation stopped at dev station after ${TEST_DURATION_SEC}
