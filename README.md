@@ -15,7 +15,7 @@ ps -ef # info about processes
 ps -eaux --forest
 ps -eT | grep <pid> # shows info about process and it's threads
 
-top + 'q'
+top + 'q' # processes info and resources (threads, cpu, memory)
 top + 'f'
 top -p <pid>
 top -H -p <pid> # shows info about process and it's threads
@@ -23,7 +23,7 @@ top -H -p <pid> # shows info about process and it's threads
 vmstat 1 [-w] # mpstat 1
 iostat 1 [-xm]
 pidstat 1
-netstat 1 [-tulnp]
+netstat 1 [-tulnp] # listening ports
 
 jps [-lvm] # java processes (jvm)
 jcmd <pid> help
