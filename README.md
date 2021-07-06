@@ -2,6 +2,8 @@ Java Application Monitoring and Troubleshooting Basics
 ======================================================
 
 ```shell script
+which <command_name> # shows directory for command
+
 uname --all # info about linux
 cat /etc/os-release # info about OS (distributive version)
 uptime 
